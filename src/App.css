@@ -1,0 +1,419 @@
+body {
+    font-family: "Inter", sans-serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+}
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    background: #ddd;
+    /* border-radius: 18px */
+    /* background: yellow; */
+    /* Remove scrollbar space */
+    /* background: transparent; */
+    /* Optional: just make scrollbar invisible */
+}
+
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    /* background: transparent; */
+    background: #999;
+    border-radius: 4px;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.add-css {
+    float: left;
+    margin-right: 1.5em;
+}
+.Cu-Css {
+    float: left;
+    margin-bottom: 1em;
+}
+.add-button {
+    align-items: center;
+    font-weight: bold;
+    display: flex;
+}
+
+.table-container-css {
+    height: 74vh !important;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: auto !important;
+}
+/* .poppins-thin {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.poppins-extralight {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.poppins-light {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.poppins-regular {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.poppins-medium {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.poppins-semibold {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.poppins-bold {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.poppins-extrabold {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.poppins-black {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.poppins-thin-italic {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 100;
+    font-style: italic;
+}
+
+.poppins-extralight-italic {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 200;
+    font-style: italic;
+}
+
+.poppins-light-italic {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.poppins-regular-italic {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.poppins-medium-italic {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.poppins-semibold-italic {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.poppins-bold-italic {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.poppins-extrabold-italic {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 800;
+    font-style: italic;
+}
+
+.poppins-black-italic {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 900;
+    font-style: italic;
+} */
+.css-1dd5ncu-MuiPaper-root-MuiTableContainer-root {
+    height: 70vh !important;
+}
+
+.button-css {
+    font-weight: bold !important;
+}
+
+.hoverCss:hover {
+    box-shadow:
+        rgba(0, 0, 0, 0.07) 0px 1px 2px,
+        rgba(0, 0, 0, 0.07) 0px 2px 4px,
+        rgba(0, 0, 0, 0.07) 0px 4px 8px,
+        rgba(0, 0, 0, 0.07) 0px 8px 16px,
+        rgba(0, 0, 0, 0.07) 0px 16px 32px,
+        rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+.hoverCss {
+    display: flex;
+}
+
+.app-list-card {
+    background-color: white;
+    border-radius: 8px;
+    height: 100px;
+    width: 350px;
+    cursor: pointer;
+    border: 1px solid #152336;
+}
+
+/* backgroundColor: `${theme.typography.primary.light}`,
+borderRadius: "8px",
+height: "100px",
+width: "350px",
+cursor: "pointer",
+border: "1px solid #152336",
+padding: 1.5, */
+
+.user-role-items {
+    transition: all 1s;
+}
+
+.user-role-item-arrow {
+    display: none;
+    transition: ease 0.5s;
+}
+
+.user-role-items:hover {
+    /* transition: all 0.1s;
+    transform: scale(1.02); */
+    background-color: #eee;
+}
+
+.user-role-items:hover .user-role-item-arrow {
+    display: block;
+}
+
+.breadcrumbItem {
+    font-size: 1.4rem !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+}
+
+/*-------------------------------------- login page css -------------------------------------*/
+
+.login-page-logo {
+    object-fit: contain;
+    width: 100%;
+    height: 90px;
+    /* border-radius: 50%; */
+}
+
+.login-page-logo-heading {
+    display: flex !important;
+    align-items: center;
+    text-align: start !important;
+    gap: 20px !important;
+    font-size: 20px !important;
+    margin-top: 20px !important;
+    color: white !important;
+}
+
+.login-page-sidebar-card {
+    height: auto !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    border-radius: 18px !important;
+    background-color: transparent !important;
+}
+
+.login-page-grid {
+    margin-top: 20% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 3% !important;
+}
+
+.login-page-heading {
+    margin: auto !important;
+    width: 100% !important;
+    padding: 4px !important;
+    color: white !important;
+    font-size: 1.5rem !important;
+    text-align: center !important;
+}
+
+.login-page-icon-button {
+    font-size: 1.3rem !important;
+    color: white !important;
+}
+.login-button {
+    height: 28% !important;
+    background-color: white !important;
+    font-weight: bold !important;
+    font-size: 1rem !important;
+}
+
+.login-page-signup-heading {
+    margin-top: 6% !important;
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+}
+
+.login-page-signup {
+    color: white;
+}
+
+/*-------------------------------------- configure apps css -------------------------------------*/
+.configure-apps-main-grid {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+
+.configure-apps-heading {
+    margin-top: 4px;
+    font-size: 1.5rem;
+}
+
+.configure-apps-process-console-page-heading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/*-------------------------------------- sidebar css -------------------------------------*/
+.mainpage-logo-img {
+    width: 300px;
+}
+.sidebar-logo-img {
+    /* width: 150px; */
+    /* max-width: 100%; */
+    height: 50px;
+    padding-top: 5px;
+}
+
+.sidebar-heading {
+    font-size: 1rem;
+    color: white;
+}
+
+.sidebar-logo-and-heading-css {
+    width: 100%;
+    height: 70px;
+    /* display: flex;
+    justify-content: flex-start;
+    align-items: center; */
+}
+
+.sidebar-user-logo {
+    border-radius: 50px;
+    border: 5px solid #eee;
+    color: white;
+    font: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 60px;
+    height: 55px;
+}
+
+.sidebar-grid {
+    height: 70px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#pinnacle-auth-frame {
+    border: none; /* Remove border */
+    box-shadow: none; /* Remove shadow */
+}
+
+.back-image {
+    background-image: url(/public/Frame.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.no-records {
+    font-weight: 500 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    color: #bbbbbb !important;
+    height: 75vh;
+}
+
+.filter-active {
+    filter: invert(100%) sepia(0%) saturate(0%) brightness(100%) contrast(100%);
+}
+
+.filter-inactive {
+    filter: invert(0%) sepia(94%) saturate(0%) hue-rotate(166deg) brightness(95%) contrast(105%);
+}
+
+.background-color-class {
+    /* background-image: linear-gradient(to top left, #e9f0f5, #f2f0f4, #f5f5f5); */
+    background-color: #fff;
+}
+
+.css-1vk3c9e-MuiTablePagination-selectLabel {
+    margin-bottom: 0;
+}
+.css-zywmmf-MuiTablePagination-displayedRows {
+    margin-bottom: 0;
+}

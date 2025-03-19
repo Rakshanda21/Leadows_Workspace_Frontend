@@ -1,0 +1,16 @@
+export const fontSize = { style: { fontSize: 14, fontWeight: 400 } };
+export const newFontSize = { style: { fontSize: 18, fontWeight: 400 } };
+export const labelFontSize = { style: { fontSize: 14, fontWeight: 500 } };
+export const max_6_characters = { maxLength: 6 };
+export const max_14_characters = { maxLength: 14 };
+export const max_15_characters = { maxLength: 15 };
+export const max_30_characters = { maxLength: 30 };
+export const max_50_characters = { maxLength: 50 };
+export const max_100_characters = { maxLength: 100 };
+export const max_134_characters = { maxLength: 134 };
+export const max_150_characters = { maxLength: 150 };
+export const max_128_characters = { maxLength: 128 };
+export const max_250_characters = { maxLength: 250 };
+export const max_255_characters = { maxLength: 255 };
+export const max_500_characters = { maxLength: 500 };
+export const max_1000_characters = { maxLength: 1000 };
