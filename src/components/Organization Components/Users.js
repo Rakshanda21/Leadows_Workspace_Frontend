@@ -122,7 +122,6 @@ export default function MyUsers() {
     };
     const deleteUser = async user => {
         try {
-            debugger;
             await axiosInstance.put(`/users/deactive-org-user-by-id`, {
                 userId: user.id,
             });
@@ -158,7 +157,6 @@ export default function MyUsers() {
 
     const restoreUser = async user => {
         try {
-            debugger;
             await axiosInstance.put(`/users/reactivate-org-user`, { userId: user.id });
             dispatch(
                 showSnackbar({
@@ -198,7 +196,6 @@ export default function MyUsers() {
             });
     }, [currentPage, pageSize, triggerFetch]);
 
-    console.log(state.allUsersDetails, "==state.allUsersDetails==");
     return (
         <PyramidCardParent>
             <Grid>

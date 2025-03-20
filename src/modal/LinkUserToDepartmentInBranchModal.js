@@ -8,8 +8,9 @@ import { getErrorMessage } from "../components/Layout";
 import { PyramidDialogTitle, PyramidOkButton } from "../theme/styleComponent";
 import axiosInstance from "../utils/axiosInstance";
 import { showSnackbar } from "../store/snackbarSlice";
+import { use } from "react";
 
-export default function LinkUserToDepartmentInBranchModal ({ open, handleClose, departmentDetails }) {
+export default function LinkUserToDepartmentInBranchModal ({ open, handleClose, departmentDetails ,branchDetails}) {
     const state = useSelector(store => store.workspaceStore);
     const [allUsersDetails, setAllUsersDetails] = useState([]);
     const navigate = useNavigate();
@@ -22,8 +23,8 @@ export default function LinkUserToDepartmentInBranchModal ({ open, handleClose, 
 
     const getAllLinkedUsersByDepartmentId = async () => {
         try {
-            const response = await axiosInstance.get(`/users-with-department/get-all-linked-users-to-department`, {
-                params: { departmentId: departmentDetails.id },
+            const response = await axiosInstance.get(`/users-with-department/get-all-linked-users-to-department-in-branch`, {
+                params: { departmentId: departmentDetails.id,branchId:branchDetails.id },
             });
             setAllUsersDetails(response.data);
         } catch (error) {
@@ -52,6 +53,7 @@ export default function LinkUserToDepartmentInBranchModal ({ open, handleClose, 
         }
     };
 
+    
     useEffect(() => {
         async function work () {
             // await getAllUsers();
@@ -65,8 +67,7 @@ export default function LinkUserToDepartmentInBranchModal ({ open, handleClose, 
     }, []);
 
     return (
-        <>
-            <Dialog open={open}  PaperProps={{ style: { width: "20%", height: "50%" } }}>
+            <Dialog open={open} onClose={handleClose}  PaperProps={{ style: { width: "20%", height: "50%" } }}>
                 <PyramidDialogTitle display={"flex"} justifyContent={"space-between"}>
                     <Grid>Link Users to {departmentDetails.departmentName}</Grid>
                     <IconButton variant='secondary' onClick={handleClose}>
@@ -91,6 +92,5 @@ export default function LinkUserToDepartmentInBranchModal ({ open, handleClose, 
                     <PyramidOkButton onClick={OnClickLinkUsersToDepartment}>Save Changes</PyramidOkButton>
                 </DialogActions>
             </Dialog>
-        </>
     );
 }

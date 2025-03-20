@@ -164,11 +164,11 @@ export default function ViewLinkedDepartmentToBranchAndLinkUserModal({ open, han
                                                         </Grid>
                                                     </StyledTableCell>
                                                     <StyledTableCell>
-                                                        <PyramidNavButton>
+                                                        <PyramidNavButton onClick={() => 
+                                                                    handleOnClickLinkUsers(department)
+                                                                }>
                                                             <InsertLink
-                                                                onClick={() => {
-                                                                    handleOnClickLinkUsers(department);
-                                                                }}
+                                                                
                                                             />
                                                         </PyramidNavButton>
                                                     </StyledTableCell>
@@ -220,6 +220,7 @@ export default function ViewLinkedDepartmentToBranchAndLinkUserModal({ open, han
                     open={linkUserToDepartmentInBranch.open}
                     handleClose={handleCloseLinkUserToDepartmentInBranch}
                     departmentDetails={linkUserToDepartmentInBranch.departmentDetails}
+                    branchDetails={branchDetails}
                 />
             )}
         </>
