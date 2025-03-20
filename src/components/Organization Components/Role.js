@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, AddCircle } from "@mui/icons-material";
 import {
     CircularProgress,
     Grid,
@@ -118,7 +118,7 @@ export default function Roles() {
                     <Grid display={"flex"} gap={2}>
                         <Grid display={"flex"} gap={1}>
                             <PyramidCreateButton onClick={() => onClickOpenAddNewRoleModal()}>
-                                <Add /> &nbsp; {displayLocalizeText("Roles")}
+                                <AddCircle /> &nbsp; {displayLocalizeText("Roles")}
                             </PyramidCreateButton>
                         </Grid>
                     </Grid>
@@ -198,7 +198,7 @@ export default function Roles() {
                                         onPageChange={handleChangePage}
                                         rowsPerPage={pageSize}
                                         onRowsPerPageChange={handleChangeRowsPerPage}
-                                        rowsPerPageOptions={[ 5, 10, 15, 20, 25]}
+                                        rowsPerPageOptions={[5, 10, 15, 20, 25]}
                                         sx={{ "& p": { marginTop: "auto" } }}
                                     />
                                 </TableFooter>

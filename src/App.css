@@ -417,3 +417,7 @@ padding: 1.5, */
 .css-zywmmf-MuiTablePagination-displayedRows {
     margin-bottom: 0;
 }
+
+.table-header {
+    background-color: red;
+}

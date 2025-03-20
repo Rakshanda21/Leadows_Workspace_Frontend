@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, AddCircle } from "@mui/icons-material";
 import { CircularProgress, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import React, { useState } from "react";
 import { CardHeadingBold, PyramidCardParent, PyramidCreateButton, PyramidTableContainer, StyledTableCell, StyledTableRow } from "../../theme/styleComponent";
@@ -22,7 +22,7 @@ export default function Inventory() {
                     <Grid display={"flex"} gap={2}>
                         <Grid display={"flex"} gap={1}>
                             <PyramidCreateButton onClick={() => onClickOpenAddNewRoleModal()}>
-                                <Add /> &nbsp; {displayLocalizeText("Inventory")}
+                                <AddCircle /> &nbsp; {displayLocalizeText("Inventory")}
                             </PyramidCreateButton>
                         </Grid>
                     </Grid>

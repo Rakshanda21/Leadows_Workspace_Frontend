@@ -94,8 +94,8 @@ export default function Layout ({ children }) {
                     <AppContent>
                         <Grid container display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                             <Grid item md={8} display={"flex"} alignItems={"center"} gap={1}>
-                                <Grid>{<SecondaryERPIcon />}</Grid>
-                                <AppHeading sx={{ marginTop: "10px" }}>&nbsp;{displayLocalizeText(VITE_APP_ORGANIZATION_NAME)}</AppHeading>
+                                {/* <Grid>{<SecondaryERPIcon />}</Grid>
+                                <AppHeading sx={{ marginTop: "10px" }}>&nbsp;{displayLocalizeText(VITE_APP_ORGANIZATION_NAME)}</AppHeading> */}
                             </Grid>
 
                             <Grid item md={2} pr={1} display={"flex"} justifyContent={"end"}>

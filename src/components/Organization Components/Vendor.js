@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, AddCircle } from "@mui/icons-material";
 import { CircularProgress, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import React, { useState } from "react";
 import {
@@ -24,12 +24,12 @@ export default function Vendor() {
                 <Grid display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Grid display={"flex"} alignItems={"center"}>
                         <VendorIcon />
-                        <CardHeadingBold>&nbsp;&nbsp;{displayLocalizeText("Vendor")}</CardHeadingBold>
+                        <CardHeadingBold>&nbsp;&nbsp;{displayLocalizeText("Vendors")}</CardHeadingBold>
                     </Grid>
                     <Grid display={"flex"} gap={2}>
                         <Grid display={"flex"} gap={1}>
                             <PyramidCreateButton onClick={() => onClickOpenAddNewRoleModal()}>
-                                <Add /> &nbsp; {displayLocalizeText("Vendor")}
+                                <AddCircle /> &nbsp; {displayLocalizeText("Vendors")}
                             </PyramidCreateButton>
                         </Grid>
                     </Grid>

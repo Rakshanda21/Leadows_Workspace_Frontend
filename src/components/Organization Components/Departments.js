@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, AddCircle } from "@mui/icons-material";
 import { Avatar, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -105,7 +105,7 @@ export default function Departments () {
                                     </PyramidCreateButton>
                                 </Grid> */}
                             <PyramidCreateButton onClick={() => onClickOpenAddNewDepartmentModal()}>
-                                <Add /> &nbsp; {displayLocalizeText("Departments")}
+                                <AddCircle /> &nbsp; {displayLocalizeText("Department")}
                             </PyramidCreateButton>
                         </Grid>
                     </Grid>

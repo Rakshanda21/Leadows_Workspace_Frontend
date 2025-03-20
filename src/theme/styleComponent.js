@@ -145,6 +145,7 @@ export const PyramidCard = styled(MuiCard)(({ theme }) => ({
     // boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
 
     boxShadow: `none`,
+    backgroundColor:'white'
 }));
 
 export const CardHeading = styled("div")(({ theme }) => ({
@@ -174,7 +175,7 @@ export const StyledTableCell = styled(MuiTableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         fontSize: "1rem",
         fontWeight: 600,
-        backgroundColor: "#fff",
+        backgroundColor: "#fafafa",
         color: theme.typography.primary.black,
         padding: "10px !important",
         // width: "100vw",
@@ -228,8 +229,16 @@ export const PyramidDialogContent = styled(MuiDialogTitle)(({ theme }) => ({
 
 export const PyramidTableContainer = styled(MuiTableContainer)(({ theme }) => ({
     boxShadow: "none",
+    border: `1px solid #ddd`,
+    borderRadius: "0.75rem",
     // boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
 }));
+
+
+// export const PyramidTableHeader = styled(MuiTableContainer)(({ theme }) => ({
+//     backgroundColor: "red",
+//     // boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+// }));
 
 export const PyramidCardGrid = styled(MuiGrid)(({ theme }) => ({
     color: theme.typography.primary.black,
@@ -261,20 +270,21 @@ export const PyramidCardParent = styled(MuiCard)(({ theme }) => ({
     marginTop: "10px",
     marginBottom: "20px",
     // minHeight: "100px",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#fff",
     display: "flex",
     flexDirection: "column",
     // boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-    border: `1px solid #f9f9f9`,
+    border: `1px solid #ddd`,
     boxShadow: "none",
     // boxShadow: `none`,
     overflowY: "hidden",
+
 }));
 
 export const CardHeadingBold = styled("div")(({ theme }) => ({
     color: theme.typography.primary.black,
     fontFamily: theme.typography.fontFamily,
-    fontSize: theme.typography.h3.fontSize,
+    fontSize: theme.typography.h2.fontSize,
     fontWeight: theme.typography.fontWeightBold,
     display: "flex",
 }));

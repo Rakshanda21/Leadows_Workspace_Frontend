@@ -1,5 +1,5 @@
-import { Add } from "@mui/icons-material";
-import { Avatar, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, useTheme } from "@mui/material";
+import { Add, AddCircle, InsertLink, Visibility } from "@mui/icons-material";
+import { Avatar, Grid, IconButton, Link, Paper, Table, TableBody, TableCell, TableHead, TableRow, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -23,11 +23,18 @@ import { getErrorMessage } from "../Layout";
 import NoRecords from "../static/NoRecords";
 import { BranchesIcon } from "../svgComponent/IconComponent";
 import ViewLinkedDepartmentToBranchModal from "../../modal/ViewLinkedDepartmentToBranchModal";
+import LinkIcon from "@mui/icons-material/Link";
+import ViewLinkedDepartmentToBranchAndLinkUserModal from "../../modal/ViewLinkedDepartmentToBranchAndLinkUserModal";
 
-export default function Branches () {
+export default function Branches() {
     const state = useSelector(store => store.workspaceStore);
     const [showAddNewBranchModal, setShowAddNewBranchModal] = useState();
     const [showViewLinkedDepartmentToBranchModal, setShowViewLinkedDepartmentToBranchModal] = useState({
+        open: false,
+        branchDetails: "",
+    });
+
+    const [ViewDepartmentToBranchModal, setViewDepartmentToBranchModal] = useState({
         open: false,
         branchDetails: "",
     });
@@ -76,9 +83,16 @@ export default function Branches () {
     const handleCloseViewLinkedDepartmentToBranchModal = () => {
         setShowViewLinkedDepartmentToBranchModal({ open: false, branchDetails: "" });
     };
+    const hanndleOnViewDepartments = row => {
+        setViewDepartmentToBranchModal({ open: true, branchDetails: row });
+    };
+
+    const handleCloseViewLinkedDepartmentToBranchAndLinkUseModal = () => {
+        setViewDepartmentToBranchModal({ open: false, branchDetails: "" });
+    };
 
     useEffect(() => {
-        async function work () {
+        async function work() {
             await getAllBranches();
         }
         work()
@@ -105,7 +119,7 @@ export default function Branches () {
                                     </PyramidCreateButton>
                                 </Grid> */}
                             <PyramidCreateButton onClick={() => onClickOpenAddNewBranchModal()}>
-                                <Add /> &nbsp; {displayLocalizeText("Branch")}
+                                <AddCircle /> &nbsp; {displayLocalizeText("Branch")}
                             </PyramidCreateButton>
                         </Grid>
                     </Grid>
@@ -115,7 +129,7 @@ export default function Branches () {
                     <Grid style={{ width: "100%" }}>
                         <PyramidTableContainer
                             component={Paper}
-                            className='table-container table-container-css'
+                            className="table-container table-container-css"
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
@@ -123,13 +137,14 @@ export default function Branches () {
                                 minHeight: "300px",
                             }}
                         >
-                            <Table className='center' aria-label='table with sticky header' stickyHeader>
-                                <TableHead className='p-3 mb-2 row'>
+                            <Table className="center" aria-label="table with sticky header" stickyHeader>
+                                <TableHead className="p-3 mb-2 row">
                                     <TableRow>
-                                        <StyledTableCell className='tableHeaderFont'></StyledTableCell>
-                                        <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Branch Name")}</StyledTableCell>
-                                        <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Location")}</StyledTableCell>
-                                        <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Linked Departments")}</StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont"></StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont">{displayLocalizeText("Branch Name")}</StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont">{displayLocalizeText("City")}</StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont">{displayLocalizeText("Link Departments")}</StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont">{displayLocalizeText("View Departments")}</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 {state.allBranchDetails && state.allBranchDetails.length > 0 ? (
@@ -138,7 +153,7 @@ export default function Branches () {
                                             <StyledTableRow key={index}>
                                                 {/* <StyledTableCell className='tableContentFont'>{index + 1}</StyledTableCell> */}
 
-                                                <StyledTableCell className='tableContentFont'>
+                                                <StyledTableCell className="tableContentFont">
                                                     <Avatar
                                                         sx={{
                                                             color: theme.typography.primary.black,
@@ -154,7 +169,7 @@ export default function Branches () {
                                                     </Avatar>
                                                 </StyledTableCell>
                                                 {/* <StyledTableCell>{branch.branchName}</StyledTableCell> */}
-                                                <StyledTableCell className='tableContentFont'>
+                                                <StyledTableCell className="tableContentFont">
                                                     <Grid>
                                                         <Grid mb={1}>{branch.branchName}</Grid>
                                                         <MetaDataText>
@@ -166,15 +181,24 @@ export default function Branches () {
                                                         </MetaDataText>
                                                     </Grid>
                                                 </StyledTableCell>
-                                                <StyledTableCell className='tableContentFont'>{branch.location}</StyledTableCell>
+                                                <StyledTableCell className="tableContentFont">{branch.location}</StyledTableCell>
 
-                                                <StyledTableCell className='tableContentFont'>
+                                                <StyledTableCell className="tableContentFont">
                                                     <PyramidNavButton
                                                         onClick={() => {
                                                             handleOnClickDepartment(branch);
                                                         }}
                                                     >
-                                                        Department
+                                                        <InsertLink />
+                                                    </PyramidNavButton>
+                                                </StyledTableCell>
+                                                <StyledTableCell className="tableContentFont">
+                                                    <PyramidNavButton
+                                                        onClick={() => {
+                                                            hanndleOnViewDepartments(branch);
+                                                        }}
+                                                    >
+                                                        <Visibility />
                                                     </PyramidNavButton>
                                                 </StyledTableCell>
                                             </StyledTableRow>
@@ -228,6 +252,13 @@ export default function Branches () {
                         open={showViewLinkedDepartmentToBranchModal.open}
                         handleClose={handleCloseViewLinkedDepartmentToBranchModal}
                         branchDetails={showViewLinkedDepartmentToBranchModal.branchDetails}
+                    />
+                )}
+                {ViewDepartmentToBranchModal.open && (
+                    <ViewLinkedDepartmentToBranchAndLinkUserModal
+                        open={ViewDepartmentToBranchModal.open}
+                        handleClose={handleCloseViewLinkedDepartmentToBranchAndLinkUseModal}
+                        branchDetails={ViewDepartmentToBranchModal.branchDetails}
                     />
                 )}
             </Grid>

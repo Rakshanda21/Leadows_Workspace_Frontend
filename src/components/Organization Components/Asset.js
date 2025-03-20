@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, AddCircle } from "@mui/icons-material";
 import { CircularProgress, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import React, { useState } from "react";
 import {
@@ -28,7 +28,7 @@ export default function Asset() {
                     <Grid display={"flex"} gap={2}>
                         <Grid display={"flex"} gap={1}>
                             <PyramidCreateButton onClick={() => onClickOpenAddNewRoleModal()}>
-                                <Add /> &nbsp; {displayLocalizeText("Asset")}
+                                <AddCircle /> &nbsp; {displayLocalizeText("Asset")}
                             </PyramidCreateButton>
                         </Grid>
                     </Grid>

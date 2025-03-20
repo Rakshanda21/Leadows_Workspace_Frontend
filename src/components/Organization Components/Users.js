@@ -1,5 +1,4 @@
-import { Add } from "@mui/icons-material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Add, AddCircle } from "@mui/icons-material";
 import ToggleOffIcon from "@mui/icons-material/ToggleOff";
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import { Avatar, Grid, IconButton, Paper, Table, TableBody, TableFooter, TableHead, TablePagination, TableRow, useTheme } from "@mui/material";
@@ -7,7 +6,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AddNewUserModal from "../../modal/AddNewUserModal";
+import UserConfirmationDeleteModal from "../../modal/UserDeleteConfirmationModel";
 import { showSnackbar } from "../../store/snackbarSlice";
+import { setAllUsersDetails } from "../../store/workspaceSlice";
 import {
     CardHeadingBold,
     MetaDataText,
@@ -18,16 +19,15 @@ import {
     StyledTableRow,
 } from "../../theme/styleComponent";
 import axiosInstance, { ORGID } from "../../utils/axiosInstance";
-import { errorMessage } from "../../utils/getErrorMessage";
 import { displayLocalizeText } from "../../utils/LocalizeText";
 import { logger } from "../../utils/logger";
 import { UserProfileColors } from "../../utils/userProfileColors";
-import { DisplayNameForPyramidSubUserRole, DisplayNameForPyramidUserRole, PyramidUserRole } from "../../utils/UserRoles";
+import { DisplayNameForPyramidSubUserRole, DisplayNameForPyramidUserRole, LeadowsUserRoles } from "../../utils/UserRoles";
 import { getErrorMessage } from "../Layout";
-import { setAllUsersDetails } from "../../store/workspaceSlice";
 import { SideBarUserIcons } from "../svgComponent/IconComponent";
+import UserConfirmationRestoreModal from "../../modal/UserRestoreConfirmationModel";
 
-export default function MyUsers () {
+export default function MyUsers() {
     const state = useSelector(store => store.workspaceStore);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -44,18 +44,17 @@ export default function MyUsers () {
     const [techSupportUsers, setTechSupportUsers] = useState([]);
 
     const [userToDelete, setUserToDelete] = useState();
-    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState({
+        open: false,
+        user: "",
+    });
     const [value, setValue] = useState("MY_USERS");
-    const [restoreModal, setRestoreModal] = useState({
+    const [restoreUserModal, setRestoreUserModal] = useState({
         open: false,
-        data: "",
+        user: "",
     });
-    const [openEditUserModal, setOpenEditUserModal] = useState({
-        open: false,
-        data: "",
-    });
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [currentPage, setCurrentPage] = React.useState(0);
+    const [pageSize, setPageSize] = React.useState(10);
     const [totalCount, setTotalCount] = useState();
 
     const formatter = new Intl.DateTimeFormat("en-US", {
@@ -70,7 +69,17 @@ export default function MyUsers () {
 
     const getAllUsers = async () => {
         try {
-            const response = await axiosInstance.get(`/users/get-all`, { params: { orgId: ORGID } });
+            const response = await axiosInstance.get(`/users/get-all`, {
+                params: {
+                    orgId: ORGID,
+                    currentPage: currentPage,
+                    pageSize: pageSize,
+                    searchByName: searchByName,
+                    userRole: userRole,
+                    userSubRole: userSubRole,
+                    status: status,
+                },
+            });
             dispatch(setAllUsersDetails(response.data.users));
             setTotalCount(response.data.totalCount);
             setShowFilterModal(false);
@@ -95,127 +104,90 @@ export default function MyUsers () {
         setOpenUserModal(true);
     };
 
-    const handleOnClickFilter = () => {
-        setShowFilterModal(true);
-    };
-
-    const onCloseFilterModal = async () => {
-        setUserSubRole([]);
-        setSearchByName("");
-        setUserRole([]);
-        setStatus(["ACTIVE", "INACTIVE"]);
-        setTriggerFetch(true);
-        setShowFilterModal(false);
-        await getAllUsers();
-    };
-
     const handleOnClickAddTechSupportUser = () => {
         setOpenTechSupportUserModal(true);
     };
 
     const handleOnClickDelete = user => {
-        setUserToDelete(user);
-        setOpenDeleteModal(true);
+        setOpenDeleteModal({
+            open: true,
+            user: user,
+        });
+    };
+    const handleCloseDeleteModal = () => {
+        setOpenDeleteModal({
+            open: false,
+            user: "",
+        });
+    };
+    const deleteUser = async user => {
+        try {
+            debugger;
+            await axiosInstance.put(`/users/deactive-org-user-by-id`, {
+                userId: user.id,
+            });
+            dispatch(
+                showSnackbar({
+                    open: true,
+                    severity: "success",
+                    message: "User Deleted SuccessFully",
+                }),
+            );
+            handleCloseDeleteModal();
+            await getAllUsers();
+        } catch (error) {
+            logger.clientLog(error);
+            getErrorMessage({ error, dispatch, navigate });
+
+            handleCloseDeleteModal();
+        }
+    };
+
+    const handleOnClickRestore = row => {
+        setRestoreUserModal({
+            open: true,
+            user: row,
+        });
+    };
+    const handleCloseRestoreModal = row => {
+        setRestoreUserModal({
+            open: false,
+            user: "",
+        });
+    };
+
+    const restoreUser = async user => {
+        try {
+            debugger;
+            await axiosInstance.put(`/users/reactivate-org-user`, { userId: user.id });
+            dispatch(
+                showSnackbar({
+                    open: true,
+                    severity: "success",
+                    message: "User Restored Successfully",
+                }),
+            );
+            handleCloseRestoreModal();
+            await getAllUsers();
+        } catch (error) {
+            logger.clientLog(error);
+            getErrorMessage({ error, dispatch, navigate });
+
+            handleCloseRestoreModal();
+        }
     };
 
     const handleChangePage = (event, newPage) => {
-        setPage(newPage);
+        setCurrentPage(newPage);
     };
 
     const handleChangeRowsPerPage = (event, rows) => {
-        setRowsPerPage(parseInt(event.target.value));
-        setPage(0);
-    };
-
-    const deleteUser = async () => {
-        try {
-            if (userToDelete) {
-                await axiosInstance.put(`/user/delete-secondary-user-by-id`, {
-                    userId: userToDelete.id,
-                });
-                getAllUsers();
-                setUserToDelete(null);
-                setOpenDeleteModal(false);
-            }
-            setUserToDelete();
-        } catch (error) {
-            // logger.clientLog(error);
-            const message = errorMessage(error);
-            if (message.statusCode === 401) {
-                dispatch(
-                    showSnackbar({
-                        open: true,
-                        severity: "error",
-                        message: "Please Login Again",
-                    }),
-                );
-                navigate("/");
-            } else {
-                dispatch(
-                    showSnackbar({
-                        open: true,
-                        severity: "error",
-                        message: message.errorMessage,
-                    }),
-                );
-            }
-        }
-    };
-
-    const handleChangeTabs = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    const handleOnClickRestore = user => {
-        setRestoreModal({ open: true, data: user });
-    };
-
-    const restoreUser = async () => {
-        try {
-            if (restoreModal.data) {
-                await axiosInstance.put(`/user/reactivate`, {
-                    userId: restoreModal.data.id,
-                });
-                await getAllUsers();
-                setRestoreModal({ open: false, data: "" });
-            }
-            setRestoreModal({ open: false, data: "" });
-        } catch (error) {
-            setRestoreModal({ open: false, data: "" });
-            getErrorMessage(error, dispatch, navigate);
-        }
-    };
-
-    const handleCloseRestoreModal = () => {
-        setRestoreModal({ open: false, data: "" });
-    };
-
-    const handleOnClickEditUser = user => {
-        setOpenEditUserModal({ open: true, data: user });
-    };
-
-    const handleCloseEditUserModal = () => {
-        setOpenEditUserModal({ open: false, data: "" });
-    };
-
-    const editOrganizationUser = async updateOrgUserDetails => {
-        try {
-            await axiosInstance.put("/user/update", updateOrgUserDetails, {
-                params: {
-                    userId: openEditUserModal.data.id,
-                },
-            });
-            await getAllUsers();
-            setOpenEditUserModal({ open: false, data: "" });
-            dispatch(showSnackbar({ open: true, severity: "success", message: "User Updated Successfully" }));
-        } catch (error) {
-            logger.clientLog(error);
-            getErrorMessage(error, dispatch, navigate);
-        }
+        setPageSize(parseInt(event.target.value));
+        setCurrentPage(0);
     };
 
     useEffect(() => {
-        async function work () {
+        async function work() {
             await getAllUsers();
         }
         work()
@@ -224,8 +196,9 @@ export default function MyUsers () {
                 logger.clientLog(error);
                 getErrorMessage(error, dispatch, navigate);
             });
-    }, [page, rowsPerPage, triggerFetch]);
+    }, [currentPage, pageSize, triggerFetch]);
 
+    console.log(state.allUsersDetails, "==state.allUsersDetails==");
     return (
         <PyramidCardParent>
             <Grid>
@@ -243,7 +216,7 @@ export default function MyUsers () {
                                     </PyramidCreateButton>
                                 </Grid> */}
                                 <PyramidCreateButton onClick={() => handleOnClickAddUser()}>
-                                    <Add /> &nbsp; {displayLocalizeText("New User")}
+                                    <AddCircle /> &nbsp; {displayLocalizeText("New User")}
                                 </PyramidCreateButton>
                             </Grid>
                         )}
@@ -259,7 +232,7 @@ export default function MyUsers () {
                     <Grid style={{ width: "100%" }}>
                         <PyramidTableContainer
                             component={Paper}
-                            className='table-container table-container-css'
+                            className="table-container table-container-css"
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
@@ -267,22 +240,24 @@ export default function MyUsers () {
                                 minHeight: "300px",
                             }}
                         >
-                            <Table className='center' aria-label='table with sticky header' stickyHeader>
-                                <TableHead className='p-3 mb-2 row'>
+                            <Table className="center" aria-label="table with sticky header" stickyHeader>
+                                <TableHead className="p-3 mb-2 row">
                                     <TableRow>
-                                        <StyledTableCell className='tableHeaderFont'></StyledTableCell>
-                                        <StyledTableCell className='tableHeaderFont'>Name</StyledTableCell>
-                                        <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Username")}</StyledTableCell>
-                                        <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Phone Number")}</StyledTableCell>
-                                        <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Role")}</StyledTableCell>
-                                        <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Sub Role")}</StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont"></StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont">Name</StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont">{displayLocalizeText("Username")}</StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont">{displayLocalizeText("Phone Number")}</StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont">{displayLocalizeText("Role")}</StyledTableCell>
+                                        {/* <StyledTableCell className="tableHeaderFont">{displayLocalizeText("Sub Role")}</StyledTableCell> */}
+                                        <StyledTableCell className="tableHeaderFont">{displayLocalizeText("Designation")}</StyledTableCell>
+                                        <StyledTableCell className="tableHeaderFont">{displayLocalizeText("Active")}</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {state.allUsersDetails.length > 0 &&
                                         state.allUsersDetails.map((row, index) => (
                                             <StyledTableRow key={index}>
-                                                <StyledTableCell className='tableContentFont'>
+                                                <StyledTableCell className="tableContentFont">
                                                     <Avatar
                                                         sx={{
                                                             color: theme.typography.primary.black,
@@ -300,7 +275,7 @@ export default function MyUsers () {
                                                 <StyledTableCell>
                                                     {row.firstName} {row.lastName}
                                                 </StyledTableCell>
-                                                <StyledTableCell className='tableContentFont'>
+                                                <StyledTableCell className="tableContentFont">
                                                     <Grid>
                                                         <Grid mb={1}>{row.email}</Grid>
                                                         <MetaDataText>
@@ -312,27 +287,70 @@ export default function MyUsers () {
                                                         </MetaDataText>
                                                     </Grid>
                                                 </StyledTableCell>
-                                                <StyledTableCell className='tableContentFont'>{row.phone}</StyledTableCell>
-                                                <StyledTableCell className='tableContentFont'>
+                                                <StyledTableCell className="tableContentFont">{row.phone}</StyledTableCell>
+                                                <StyledTableCell className="tableContentFont">
                                                     {displayLocalizeText(DisplayNameForPyramidUserRole[row.userRole])}
                                                 </StyledTableCell>
-                                                <StyledTableCell className='tableContentFont'>
-                                                    {displayLocalizeText(DisplayNameForPyramidSubUserRole[row.userSubRole])}
+                                                <StyledTableCell className="tableContentFont">
+                                                    {row.designation}
                                                 </StyledTableCell>
+                                                {row.status === "ACTIVE" ? (
+                                                    <StyledTableCell className="tableContentFont">
+                                                        {state.userDetails?.userRole === LeadowsUserRoles.ORG_OWNER
+                                                            ? row.userRole !== LeadowsUserRoles.ORG_OWNER && (
+                                                                  <IconButton
+                                                                      onClick={() => handleOnClickDelete(row)}
+                                                                  >
+                                                                      <ToggleOnIcon
+                                                                          fontSize="large"
+                                                                          sx={{
+                                                                              color: theme.typography.primary.black,
+                                                                          }}
+                                                                      />
+                                                                  </IconButton>
+                                                              )
+                                                            : row.userRole !== LeadowsUserRoles.ORG_OWNER &&
+                                                              row.userRole !== LeadowsUserRoles.ORG_ADMIN && (
+                                                                  <IconButton
+                                                                      onClick={() => handleOnClickDelete(row)}
+                                                                  >
+                                                                      <ToggleOnIcon
+                                                                          fontSize="large"
+                                                                          sx={{
+                                                                              color: theme.typography.primary.black,
+                                                                          }}
+                                                                      />
+                                                                  </IconButton>
+                                                              )}
+                                                    </StyledTableCell>
+                                                ) : (
+                                                    <StyledTableCell className="tableContentFont">
+                                                        {row.userRole !== LeadowsUserRoles.ORG_OWNER && (
+                                                            <IconButton
+                                                                style={{ color: theme.palette.primary.main }}
+                                                                onClick={() => {
+                                                                    handleOnClickRestore(row);
+                                                                }}
+                                                            >
+                                                                <ToggleOffIcon fontSize="large" sx={{ color: theme.palette.primary.inActive }} />
+                                                            </IconButton>
+                                                        )}
+                                                    </StyledTableCell>
+                                                )}
                                             </StyledTableRow>
                                         ))}
                                 </TableBody>
                             </Table>
-                            <Grid container justifyContent='flex-end' sx={{ padding: "8px 16px" }}>
+                            <Grid container justifyContent="flex-end" sx={{ padding: "8px 16px" }}>
                                 <TableFooter>
                                     <TablePagination
-                                        component='div'
+                                        component="div"
                                         count={totalCount}
-                                        page={page}
+                                        page={currentPage}
                                         onPageChange={handleChangePage}
-                                        rowsPerPage={rowsPerPage}
+                                        rowsPerPage={pageSize}
                                         onRowsPerPageChange={handleChangeRowsPerPage}
-                                        rowsPerPageOptions={[5, 10, 15, 20, 25]}
+                                        rowsPerPageOptions={[1, 5, 10, 15, 20, 25]}
                                         sx={{ "& p": { marginTop: "auto" } }}
                                     />
                                 </TableFooter>
@@ -343,14 +361,6 @@ export default function MyUsers () {
                     {/* {value === "TECH_SUPPORT_USER" && <TechSupportUserComponent techSupportUsers={techSupportUsers} />} */}
                 </Grid>
 
-                {/* {userToDelete && (
-                    <UserConfirmationDeleteModal open={openDeleteModal} handleClose={() => setOpenDeleteModal(false)} deleteUser={deleteUser} />
-                )} */}
-                {/* 
-                {restoreModal.open && (
-                    <UserConfirmationRestoreModal open={restoreModal.open} handleClose={handleCloseRestoreModal} restoreUser={restoreUser} />
-                )} */}
-
                 {openUserModal && (
                     <AddNewUserModal
                         open={openUserModal}
@@ -358,7 +368,23 @@ export default function MyUsers () {
                         createOrganizationUser={createOrganizationUser}
                     />
                 )}
+                {openDeleteModal.open && (
+                    <UserConfirmationDeleteModal
+                        open={openDeleteModal.open}
+                        user={openDeleteModal.user}
+                        handleClose={handleCloseDeleteModal}
+                        deleteUser={deleteUser}
+                    />
+                )}
 
+                {restoreUserModal.open && (
+                    <UserConfirmationRestoreModal
+                        open={restoreUserModal.open}
+                        handleClose={handleCloseRestoreModal}
+                        user={restoreUserModal.user}
+                        restoreUser={restoreUser}
+                    />
+                )}
                 {/* {openEditUserModal.open && (
                     <EditUserModal
                         open={openEditUserModal.open}

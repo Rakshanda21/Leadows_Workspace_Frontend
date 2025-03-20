@@ -33,7 +33,7 @@ export const Org_Owner_NavBarOptions = [
         defaultRoute: true,
     },
     {
-        name: "Vendor",
+        name: "Vendors",
         iconProvider: "mui",
         icon: Hail,
         route: "/vendor",

@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, AddCircle } from "@mui/icons-material";
 import { CircularProgress, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -89,7 +89,7 @@ export default function Roles() {
                     <Grid display={"flex"} gap={2}>
                         <Grid display={"flex"} gap={1}>
                             <PyramidCreateButton onClick={() => onClickOpenAddNewRoleModal()}>
-                                <Add /> &nbsp; {displayLocalizeText("Customers")}
+                                <AddCircle /> &nbsp; {displayLocalizeText("Customers")}
                             </PyramidCreateButton>
                         </Grid>
                     </Grid>
