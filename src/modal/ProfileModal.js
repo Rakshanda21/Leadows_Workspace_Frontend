@@ -8,12 +8,15 @@ import axiosInstance from "../utils/axiosInstance";
 import { displayLocalizeText } from "../utils/LocalizeText";
 import { DisplayNameForPyramidUserRole } from "../utils/UserRoles";
 import { UserProfileColors } from "../utils/userProfileColors";
+import ChangePasswordModal from "./ChangePasswordModal";
+import { useState } from "react";
 
-export default function ProfileModal ({ open, handleClose }) {
+export default function ProfileModal({ open, handleClose }) {
     const state = useSelector(store => store.workspaceStore);
     const theme = useTheme();
     let userRole = DisplayNameForPyramidUserRole[state.userDetails.userRole];
     const navigate = useNavigate();
+    const [changePasswordModal, setChangePasswordModal] = useState(false);
 
     const handleLogOut = async () => {
         window.localStorage.setItem("timerEndTime", "");
@@ -22,6 +25,13 @@ export default function ProfileModal ({ open, handleClose }) {
             navigate("/");
         }
     };
+    const handleChangePassword = async () => {
+        setChangePasswordModal(true);
+    };
+    const handleCloseChangePassword = () => {
+        setChangePasswordModal(false);
+    };
+
     return (
         <Dialog
             open={open}
@@ -43,9 +53,9 @@ export default function ProfileModal ({ open, handleClose }) {
             sx={{ overflow: "hidden !important" }}
         >
             <DialogContent>
-                <Grid container alignItems='center' justifyContent='space-between' pb={2}>
+                <Grid container alignItems="center" justifyContent="space-between" pb={2}>
                     <Grid item xs>
-                        <Grid container justifyContent='center'>
+                        <Grid container justifyContent="center">
                             <PyramidLoggedInUserInfo>{state.userDetails?.email}</PyramidLoggedInUserInfo>
                         </Grid>
                     </Grid>
@@ -57,7 +67,7 @@ export default function ProfileModal ({ open, handleClose }) {
                     </Grid>
                 </Grid>
 
-                <Grid display='flex' flexDirection='column' alignItems='center'>
+                <Grid display="flex" flexDirection="column" alignItems="center">
                     <Avatar
                         sx={{
                             color: theme.typography.primary.black,
@@ -75,8 +85,12 @@ export default function ProfileModal ({ open, handleClose }) {
                     <Grid mt={4}>
                         <PyramidCreateButton onClick={handleLogOut}>Sign Out</PyramidCreateButton>
                     </Grid>
+                    <Grid mt={4}>
+                        <PyramidCreateButton onClick={handleChangePassword}>Change Password</PyramidCreateButton>
+                    </Grid>
                 </Grid>
             </DialogContent>
+            {changePasswordModal && <ChangePasswordModal open={changePasswordModal} handleCloseChangePassword={handleCloseChangePassword} />}
         </Dialog>
     );
 }

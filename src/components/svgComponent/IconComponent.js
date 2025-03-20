@@ -163,3 +163,23 @@ export function BillingUnitIcon () {
 export function LiveAgentIcon () {
     return <img src='/assets/liveagent.svg' style={{ height: "30px" }} alt='' />;
 }
+
+export function RoleIcon () {
+    return <img src='/assets/role.svg' style={{ height: "1.5rem" }} alt='' />;
+}
+
+export function VendorIcon () {
+    return <img src='/assets/vendor.svg' style={{ height: "1.5rem" }} alt='' />;
+}
+
+export function AssetIcon () {
+    return <img src='/assets/asset.svg' style={{ height: "1.5rem" }} alt='' />;
+}
+
+export function InventoryIcon () {
+    return <img src='/assets/inventory.svg' style={{ height: "1.5rem" }} alt='' />;
+}
+
+export function CustomerIcon () {
+    return <img src='/assets/customer.svg' style={{ height: "1.5rem" }} alt='' />;
+}

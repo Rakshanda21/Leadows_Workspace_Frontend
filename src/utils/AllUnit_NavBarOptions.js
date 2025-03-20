@@ -1,6 +1,7 @@
-import { AccountTree, Apps, AssignmentInd, DomainAdd, GroupAdd, Hail, MapsHomeWork } from "@mui/icons-material";
-import BadgeIcon from '@mui/icons-material/Badge';
-
+import { AccountTree, Apps, DomainAdd, GroupAdd, Hail, MapsHomeWork, WebAsset } from "@mui/icons-material";
+import BadgeIcon from "@mui/icons-material/Badge";
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import Groups2Icon from '@mui/icons-material/Groups2';
 export const Org_Owner_NavBarOptions = [
     {
         name: "Users",
@@ -35,6 +36,27 @@ export const Org_Owner_NavBarOptions = [
         iconProvider: "mui",
         icon: Hail,
         route: "/vendor",
+        defaultRoute: true,
+    },
+    {
+        name: "Asset",
+        iconProvider: "mui",
+        icon: WebAsset,
+        route: "/asset",
+        defaultRoute: true,
+    },
+    {
+        name: "Inventory",
+        iconProvider: "mui",
+        icon: Inventory2Icon,
+        route: "/inventory",
+        defaultRoute: true,
+    },
+    {
+        name: "Customers",
+        iconProvider: "mui",
+        icon: Groups2Icon,
+        route: "/customers",
         defaultRoute: true,
     },
     {

@@ -6,6 +6,11 @@ export const Slice = createSlice({
         userDetails: {},
         allUsersDetails: [],
         allOrgUsersDetails: [],
+        allOrgRolesDetails: [],
+        allCustomerDetails: [],
+        allVendorDetails: [],
+        allAssetDetails: [],
+        allInventoryDetails: [],
     },
     reducers: {
         setLoginData: (state, action) => {
@@ -27,6 +32,22 @@ export const Slice = createSlice({
         setAllDepartmentDetails: (state, action) => {
             state.allDepartmentDetails = action.payload;
         },
+        setAllRoleDetails: (state, action) => {
+            state.allOrgRolesDetails = action.payload;
+        },
+        setAllCustomerDetails: (state, action) => {
+            state.allCustomerDetails = action.payload;
+        },
+        setAllVendorDetails: (state, action) => {
+            state.allVendorDetails = action.payload;
+        },
+        setAllAssetDetails: (state, action) => {
+            state.allAssetDetails = action.payload;
+        },
+        setAllInventoryDetails: (state, action) => {
+            state.allInventoryDetails = action.payload;
+        },
     },
 });
-export const { setLoginData, setAllUsersDetails, setAllOrgUsersDetails, setAllBranchDetails, setAllDepartmentDetails } = Slice.actions;
+export const { setLoginData, setAllUsersDetails, setAllOrgUsersDetails, setAllBranchDetails, setAllDepartmentDetails, setAllRoleDetails ,setAllCustomerDetails,setAllVendorDetails,setAllInventoryDetails} =
+    Slice.actions;
