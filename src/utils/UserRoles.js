@@ -31,22 +31,11 @@ export const PyramidUnitType = {
 };
 
 export const DisplayNameForPyramidUserRole = {
-    // PRIMARY_ERP_OWNER: "Owner",
-    // PRIMARY_ERP_ADMIN: "Admin",
-    // PRIMARY_ERP_USER: "User",
-
-    // SECONDARY_ERP_OWNER: "Owner",
-    // SECONDARY_ERP_ADMIN: "Admin",
-    // SECONDARY_ERP_USER: "User",
-
-    // REGISTRY_OWNER: "Owner",
-    // REGISTRY_ADMIN: "Admin",
-    // REGISTRY_USER: "User",
-
     ORG_OWNER: "Owner",
     ORG_ADMIN: "Admin",
     ORG_USER: "User",
-
+    EMPLOYEE: "Employee",
+    CONSULTANT: "Consultant",
     EXTERNAL_USER: "External User",
 };
 

@@ -7,6 +7,7 @@ import AddNewBranchModal from "../../modal/AddNewBranchModal";
 import { setAllBranchDetails } from "../../store/workspaceSlice";
 import {
     CardHeadingBold,
+    MetaDataText,
     PyramidCardParent,
     PyramidCreateButton,
     PyramidNavButton,
@@ -21,11 +22,12 @@ import { UserProfileColors } from "../../utils/userProfileColors";
 import { getErrorMessage } from "../Layout";
 import NoRecords from "../static/NoRecords";
 import { BranchesIcon } from "../svgComponent/IconComponent";
+import ViewLinkedDepartmentToBranchModal from "../../modal/ViewLinkedDepartmentToBranchModal";
 
 export default function Branches () {
     const state = useSelector(store => store.workspaceStore);
     const [showAddNewBranchModal, setShowAddNewBranchModal] = useState();
-    const [showOpenViewLinkedUsersModal, setShowOpenViewLinkedUsersModal] = useState({
+    const [showViewLinkedDepartmentToBranchModal, setShowViewLinkedDepartmentToBranchModal] = useState({
         open: false,
         branchDetails: "",
     });
@@ -67,12 +69,12 @@ export default function Branches () {
         }
     };
 
-    const handleOnClickUsers = row => {
-        setShowOpenViewLinkedUsersModal({ open: true, branchDetails: row });
+    const handleOnClickDepartment = row => {
+        setShowViewLinkedDepartmentToBranchModal({ open: true, branchDetails: row });
     };
 
-    const handleCloseViewLinkedUsersToBranchModal = () => {
-        setShowOpenViewLinkedUsersModal({ open: false, branchDetails: "" });
+    const handleCloseViewLinkedDepartmentToBranchModal = () => {
+        setShowViewLinkedDepartmentToBranchModal({ open: false, branchDetails: "" });
     };
 
     useEffect(() => {
@@ -151,25 +153,25 @@ export default function Branches () {
                                                         {branch.branchName[0].toUpperCase()}
                                                     </Avatar>
                                                 </StyledTableCell>
-                                                <StyledTableCell>{branch.branchName}</StyledTableCell>
-                                                {/* <StyledTableCell className='tableContentFont'>
+                                                {/* <StyledTableCell>{branch.branchName}</StyledTableCell> */}
+                                                <StyledTableCell className='tableContentFont'>
                                                     <Grid>
-                                                        <Grid mb={1}>{row.email}</Grid>
+                                                        <Grid mb={1}>{branch.branchName}</Grid>
                                                         <MetaDataText>
-                                                            {row.status === "INACTIVE" ? (
-                                                                <>Deactivated by: {row.deactivatedBy}</>
+                                                            {branch.status === "INACTIVE" ? (
+                                                                <>Deactivated by: {branch.deactivatedBy}</>
                                                             ) : (
-                                                                <>Created by: {row.createdBy}</>
+                                                                <>Created by: {branch.createdBy}</>
                                                             )}
                                                         </MetaDataText>
                                                     </Grid>
-                                                </StyledTableCell> */}
+                                                </StyledTableCell>
                                                 <StyledTableCell className='tableContentFont'>{branch.location}</StyledTableCell>
 
                                                 <StyledTableCell className='tableContentFont'>
                                                     <PyramidNavButton
                                                         onClick={() => {
-                                                            handleOnClickUsers(branch);
+                                                            handleOnClickDepartment(branch);
                                                         }}
                                                     >
                                                         Department
@@ -221,13 +223,13 @@ export default function Branches () {
                     />
                 )}
 
-                {/* {showOpenViewLinkedUsersModal.open && (
-                    <ViewLinkedUsersToBranchModal
-                        open={showOpenViewLinkedUsersModal.open}
-                        handleClose={handleCloseViewLinkedUsersToBranchModal}
-                        branchDetails={showOpenViewLinkedUsersModal.branchDetails}
+                {showViewLinkedDepartmentToBranchModal.open && (
+                    <ViewLinkedDepartmentToBranchModal
+                        open={showViewLinkedDepartmentToBranchModal.open}
+                        handleClose={handleCloseViewLinkedDepartmentToBranchModal}
+                        branchDetails={showViewLinkedDepartmentToBranchModal.branchDetails}
                     />
-                )} */}
+                )}
             </Grid>
         </PyramidCardParent>
     );

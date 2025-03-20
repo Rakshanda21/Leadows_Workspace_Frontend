@@ -56,16 +56,7 @@ export default function AddNewBranchModal ({ open, handleClose, createBranch }) 
         setLinkUsersToBranchPayload(newUserObjectPayload);
     };
 
-    // const getAllOrgUsers = async () => {
-    //     try {
-    //         const response = await axiosInstance.get(`/users/get-all-org-users`, { params: { orgId: ORGID } });
-    //         dispatch(setAllOrgUsersDetails(response.data.users));
-    //     } catch (error) {
-    //         getErrorMessage(error, dispatch, navigate);
-    //     }
-    // };
-
-    const onClickSubmitDetails = async () => {
+      const onClickSubmitDetails = async () => {
         if (createBranchDetails.branchName === "") {
             dispatch(showSnackbar({ open: true, severity: "error", message: "Please Enter Branch Name" }));
             return;

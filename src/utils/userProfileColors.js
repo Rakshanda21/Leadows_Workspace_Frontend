@@ -2,7 +2,7 @@ export const UserProfileColors = {
     A: "#fee2e2",
     B: "#ffedd5",
     C: "#fef3c7",
-    D: "#fef9c3",
+    D: "#fae8ff",
     E: "#fef9c3",
     F: "#ecfccb",
     G: "#dcfce7",
