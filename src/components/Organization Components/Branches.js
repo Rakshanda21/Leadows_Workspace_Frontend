@@ -21,7 +21,6 @@ import { UserProfileColors } from "../../utils/userProfileColors";
 import { getErrorMessage } from "../Layout";
 import NoRecords from "../static/NoRecords";
 import { BranchesIcon } from "../svgComponent/IconComponent";
-import ViewLinkedUsersToBranchModal from "../../modal/ViewLinkedUsersToBranchModal";
 
 export default function Branches () {
     const state = useSelector(store => store.workspaceStore);
@@ -88,8 +87,6 @@ export default function Branches () {
             });
     }, []);
 
-    console.log(showOpenViewLinkedUsersModal, "showOpenViewLinkedUsersModal");
-
     return (
         <PyramidCardParent>
             <Grid>
@@ -130,12 +127,12 @@ export default function Branches () {
                                         <StyledTableCell className='tableHeaderFont'></StyledTableCell>
                                         <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Branch Name")}</StyledTableCell>
                                         <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Location")}</StyledTableCell>
-                                        <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Linked Users")}</StyledTableCell>
+                                        <StyledTableCell className='tableHeaderFont'>{displayLocalizeText("Linked Departments")}</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 {state.allBranchDetails && state.allBranchDetails.length > 0 ? (
                                     <TableBody>
-                                        {state.allBranchDetails.map((row, index) => (
+                                        {state.allBranchDetails.map((branch, index) => (
                                             <StyledTableRow key={index}>
                                                 {/* <StyledTableCell className='tableContentFont'>{index + 1}</StyledTableCell> */}
 
@@ -144,17 +141,17 @@ export default function Branches () {
                                                         sx={{
                                                             color: theme.typography.primary.black,
                                                             backgroundColor:
-                                                                row.status === "ACTIVE"
-                                                                    ? UserProfileColors[row?.branchName[0].toUpperCase()]
+                                                                branch.status === "ACTIVE"
+                                                                    ? UserProfileColors[branch?.branchName[0].toUpperCase()]
                                                                     : theme.palette.primary.inActive,
 
                                                             border: `1px solid ${theme.palette.primary.borderColor}`,
                                                         }}
                                                     >
-                                                        {row.branchName[0].toUpperCase()}
+                                                        {branch.branchName[0].toUpperCase()}
                                                     </Avatar>
                                                 </StyledTableCell>
-                                                <StyledTableCell>{row.branchName}</StyledTableCell>
+                                                <StyledTableCell>{branch.branchName}</StyledTableCell>
                                                 {/* <StyledTableCell className='tableContentFont'>
                                                     <Grid>
                                                         <Grid mb={1}>{row.email}</Grid>
@@ -167,15 +164,15 @@ export default function Branches () {
                                                         </MetaDataText>
                                                     </Grid>
                                                 </StyledTableCell> */}
-                                                <StyledTableCell className='tableContentFont'>{row.location}</StyledTableCell>
+                                                <StyledTableCell className='tableContentFont'>{branch.location}</StyledTableCell>
 
                                                 <StyledTableCell className='tableContentFont'>
                                                     <PyramidNavButton
                                                         onClick={() => {
-                                                            handleOnClickUsers(row);
+                                                            handleOnClickUsers(branch);
                                                         }}
                                                     >
-                                                        Users
+                                                        Department
                                                     </PyramidNavButton>
                                                 </StyledTableCell>
                                             </StyledTableRow>
@@ -224,13 +221,13 @@ export default function Branches () {
                     />
                 )}
 
-                {showOpenViewLinkedUsersModal.open && (
+                {/* {showOpenViewLinkedUsersModal.open && (
                     <ViewLinkedUsersToBranchModal
                         open={showOpenViewLinkedUsersModal.open}
                         handleClose={handleCloseViewLinkedUsersToBranchModal}
                         branchDetails={showOpenViewLinkedUsersModal.branchDetails}
                     />
-                )}
+                )} */}
             </Grid>
         </PyramidCardParent>
     );

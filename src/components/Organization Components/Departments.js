@@ -10,6 +10,7 @@ import {
     MetaDataText,
     PyramidCardParent,
     PyramidCreateButton,
+    PyramidNavButton,
     PyramidTableContainer,
     StyledTableCell,
     StyledTableRow,
@@ -18,14 +19,18 @@ import axiosInstance, { ORGID } from "../../utils/axiosInstance";
 import { displayLocalizeText } from "../../utils/LocalizeText";
 import { logger } from "../../utils/logger";
 import { UserProfileColors } from "../../utils/userProfileColors";
-import { DisplayNameForPyramidSubUserRole, DisplayNameForPyramidUserRole } from "../../utils/UserRoles";
 import { getErrorMessage } from "../Layout";
 import NoRecords from "../static/NoRecords";
 import { DepartmentIcon } from "../svgComponent/IconComponent";
+import ViewLinkedUsersToDepartmentModal from "../../modal/ViewLinkedUsersToDepartmentModal";
 
 export default function Departments () {
     const state = useSelector(store => store.workspaceStore);
     const [showAddNewDepartmentModal, setShowAddNewDepartmentModal] = useState();
+    const [showOpenViewLinkedUsersToDepartmentModal, setShowOpenViewLinkedUsersDepartmentModal] = useState({
+        open: false,
+        departmentDetails: "",
+    });
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -49,8 +54,27 @@ export default function Departments () {
         }
     };
 
+    const handleOnClickUsers = row => {
+        setShowOpenViewLinkedUsersDepartmentModal({ open: true, departmentDetails: row });
+    };
+
+    const handleCloseViewLinkedUsersToBranchModal = () => {
+        setShowOpenViewLinkedUsersDepartmentModal({ open: false, departmentDetails: "" });
+    };
+
     const onClickOpenAddNewDepartmentModal = () => {
         setShowAddNewDepartmentModal(true);
+    };
+
+    const onClickCreateNewDepartment = async departmentDetails => {
+        try {
+            await axiosInstance.post("/departments/create-department", departmentDetails);
+            await getAllDepartments();
+            setShowAddNewDepartmentModal(false);
+            dispatch(showSnackbar({ open: true, severity: "success", message: "Department Added Successfully" }));
+        } catch (error) {
+            getErrorMessage(error, dispatch, navigate);
+        }
     };
 
     useEffect(() => {
@@ -102,52 +126,51 @@ export default function Departments () {
                             <Table className='center' aria-label='table with sticky header' stickyHeader>
                                 <TableHead className='p-3 mb-2 row'>
                                     <TableRow>
-                                        <StyledTableCell className='tableHeaderFont'>Sr.No</StyledTableCell>
+                                        <StyledTableCell className='tableHeaderFont'></StyledTableCell>
                                         <StyledTableCell className='tableHeaderFont'>Name</StyledTableCell>
+                                        <StyledTableCell className='tableHeaderFont'>Linked Users</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 {state.allDepartmentDetails && state.allDepartmentDetails.length > 0 ? (
                                     <TableBody>
-                                        {state.allDepartmentDetails.map((row, index) => (
+                                        {state.allDepartmentDetails.map((department, index) => (
                                             <StyledTableRow key={index}>
-                                                <StyledTableCell className='tableContentFont'>{index + 1}</StyledTableCell>
-
                                                 <StyledTableCell className='tableContentFont'>
                                                     <Avatar
                                                         sx={{
                                                             color: theme.typography.primary.black,
                                                             backgroundColor:
-                                                                row.status === "ACTIVE"
-                                                                    ? UserProfileColors[row.firstName[0].toUpperCase()]
+                                                                department.status === "ACTIVE"
+                                                                    ? UserProfileColors[department.firstName[0].toUpperCase()]
                                                                     : theme.palette.primary.inActive,
 
                                                             border: `1px solid ${theme.palette.primary.borderColor}`,
                                                         }}
                                                     >
-                                                        {row.firstName[0].toUpperCase()}
+                                                        {department.departmentName[0].toUpperCase()}
                                                     </Avatar>
                                                 </StyledTableCell>
-                                                <StyledTableCell>
-                                                    {row.firstName} {row.lastName}
-                                                </StyledTableCell>
+                                                {/* <StyledTableCell>{department.departmentName}</StyledTableCell> */}
                                                 <StyledTableCell className='tableContentFont'>
                                                     <Grid>
-                                                        <Grid mb={1}>{row.email}</Grid>
+                                                        <Grid mb={1}>{department.departmentName}</Grid>
                                                         <MetaDataText>
-                                                            {row.status === "INACTIVE" ? (
-                                                                <>Deactivated by: {row.deactivatedBy}</>
+                                                            {department.status === "INACTIVE" ? (
+                                                                <>Deactivated by: {department.deactivatedBy}</>
                                                             ) : (
-                                                                <>Created by: {row.createdBy}</>
+                                                                <>Created by: {department.createdBy}</>
                                                             )}
                                                         </MetaDataText>
                                                     </Grid>
                                                 </StyledTableCell>
-                                                <StyledTableCell className='tableContentFont'>{row.phone}</StyledTableCell>
                                                 <StyledTableCell className='tableContentFont'>
-                                                    {displayLocalizeText(DisplayNameForPyramidUserRole[row.userRole])}
-                                                </StyledTableCell>
-                                                <StyledTableCell className='tableContentFont'>
-                                                    {displayLocalizeText(DisplayNameForPyramidSubUserRole[row.userSubRole])}
+                                                    <PyramidNavButton
+                                                        onClick={() => {
+                                                            handleOnClickUsers(department);
+                                                        }}
+                                                    >
+                                                        Users
+                                                    </PyramidNavButton>
                                                 </StyledTableCell>
                                             </StyledTableRow>
                                         ))}
@@ -191,7 +214,15 @@ export default function Departments () {
                     <AddNewDepartmentModal
                         open={showAddNewDepartmentModal}
                         handleClose={() => setShowAddNewDepartmentModal(false)}
-                        // createSecondaryERPUser={createSecondaryERPUser}
+                        createNewDepartment={onClickCreateNewDepartment}
+                    />
+                )}
+
+                {showOpenViewLinkedUsersToDepartmentModal.open && (
+                    <ViewLinkedUsersToDepartmentModal
+                        open={showOpenViewLinkedUsersToDepartmentModal.open}
+                        handleClose={handleCloseViewLinkedUsersToBranchModal}
+                        departmentDetails={showOpenViewLinkedUsersToDepartmentModal.departmentDetails}
                     />
                 )}
             </Grid>

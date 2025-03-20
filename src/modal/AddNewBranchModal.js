@@ -1,33 +1,18 @@
-import {
-    Checkbox,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    FormControl,
-    Grid,
-    InputLabel,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    TextField,
-} from "@mui/material";
+import { Dialog, DialogActions, DialogContent, Grid, TextField } from "@mui/material";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { PyramidCancelButton, PyramidCreateButton, PyramidDialogTitle } from "../theme/styleComponent";
-import { displayLocalizeText } from "../utils/LocalizeText";
-import { ownerAddUserRoles, subRolesForUsers } from "../utils/roles";
-import { useEffect } from "react";
-import { getErrorMessage } from "../components/Layout";
 import { useNavigate } from "react-router-dom";
-import axiosInstance, { ORGID } from "../utils/axiosInstance";
-import { setAllOrgUsersDetails } from "../store/workspaceSlice";
+import { getErrorMessage } from "../components/Layout";
 import { showSnackbar } from "../store/snackbarSlice";
+import { PyramidCancelButton, PyramidCreateButton, PyramidDialogTitle } from "../theme/styleComponent";
+import { ORGID } from "../utils/axiosInstance";
+import { displayLocalizeText } from "../utils/LocalizeText";
 
 export default function AddNewBranchModal ({ open, handleClose, createBranch }) {
     const state = useSelector(store => store.workspaceStore);
     const [createBranchDetails, setCreateBranchDetails] = useState({
-        orgId:ORGID,
+        orgId: ORGID,
         branchName: "",
         location: "",
         users: [],
@@ -40,22 +25,8 @@ export default function AddNewBranchModal ({ open, handleClose, createBranch }) 
 
     const handleDetails = event => {
         const { name, value } = event.target;
-
-        let selectedValue = value;
-        switch (name) {
-            case "userRole":
-                selectedValue = ownerAddUserRoles[value];
-                break;
-            case "userSubRole":
-                selectedValue = subRolesForUsers[value];
-                break;
-            default:
-                break;
-        }
         let objectToChange = {};
-
-        objectToChange = { ...createBranchDetails, [name]: selectedValue };
-
+        objectToChange = { ...createBranchDetails, [name]: value };
         setCreateBranchDetails(objectToChange);
     };
 
@@ -68,10 +39,10 @@ export default function AddNewBranchModal ({ open, handleClose, createBranch }) 
         const userId = user.id;
         const email = user.email;
 
-    //     let payload = {
-    //         userId,
-    //         // email,
-    //    };
+        //     let payload = {
+        //         userId,
+        //         // email,
+        //    };
 
         if (e.target.checked) {
             newUserObject.push(email);
@@ -85,14 +56,14 @@ export default function AddNewBranchModal ({ open, handleClose, createBranch }) 
         setLinkUsersToBranchPayload(newUserObjectPayload);
     };
 
-    const getAllOrgUsers = async () => {
-        try {
-            const response = await axiosInstance.get(`/users/get-all-org-users`, { params: { orgId: ORGID } });
-            dispatch(setAllOrgUsersDetails(response.data.users));
-        } catch (error) {
-            getErrorMessage(error, dispatch, navigate);
-        }
-    };
+    // const getAllOrgUsers = async () => {
+    //     try {
+    //         const response = await axiosInstance.get(`/users/get-all-org-users`, { params: { orgId: ORGID } });
+    //         dispatch(setAllOrgUsersDetails(response.data.users));
+    //     } catch (error) {
+    //         getErrorMessage(error, dispatch, navigate);
+    //     }
+    // };
 
     const onClickSubmitDetails = async () => {
         if (createBranchDetails.branchName === "") {
@@ -122,7 +93,7 @@ export default function AddNewBranchModal ({ open, handleClose, createBranch }) 
 
     useEffect(() => {
         async function work () {
-            await getAllOrgUsers();
+            // await getAllOrgUsers();
         }
         work()
             .then(() => {})
@@ -142,7 +113,7 @@ export default function AddNewBranchModal ({ open, handleClose, createBranch }) 
                     <TextField fullWidth size='small' label='Enter Location' name='location' type='text' onChange={handleDetails}></TextField>
                 </Grid>
 
-                <FormControl size='small' fullWidth sx={{ marginTop: "15px" }}>
+                {/* <FormControl size='small' fullWidth sx={{ marginTop: "15px" }}>
                     <InputLabel id='demo-multiple-name-label'>{displayLocalizeText("Add Users")}</InputLabel>
                     <Select
                         labelId='demo-multiple-name-label'
@@ -167,7 +138,7 @@ export default function AddNewBranchModal ({ open, handleClose, createBranch }) 
                             </MenuItem>
                         ))}
                     </Select>
-                </FormControl>
+                </FormControl> */}
             </DialogContent>
 
             <DialogActions>
