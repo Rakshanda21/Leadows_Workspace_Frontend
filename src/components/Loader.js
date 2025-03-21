@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { CircularProgress } from "@mui/material";
 import React from "react";
+import { HashLoader, PropagateLoader, RingLoader } from "react-spinners";
 
 const Root = styled.div`
     justify-content: center;
@@ -12,7 +12,7 @@ const Root = styled.div`
 function Loader({ size = 40 }) {
     return (
         <Root>
-            <CircularProgress color="secondary" size={size} />
+            <RingLoader size={size} />
         </Root>
     );
 }

@@ -9,7 +9,7 @@ import { showSnackbar } from "../store/snackbarSlice";
 import { PyramidDialogTitle, PyramidOkButton } from "../theme/styleComponent";
 import axiosInstance from "../utils/axiosInstance";
 
-export default function ViewLinkedDepartmentToBranchModal ({ open, handleClose, branchDetails }) {
+export default function ViewLinkedDepartmentToBranchModal({ open, handleClose, branchDetails }) {
     const state = useSelector(store => store.workspaceStore);
     const [allDepartmentDetails, setAllDepartmentDetails] = useState([]);
     const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function ViewLinkedDepartmentToBranchModal ({ open, handleClose, 
     };
 
     useEffect(() => {
-        async function work () {
+        async function work() {
             // await getAllUsers();
             await getAllLinkedUsersByDepartmentId();
         }
@@ -65,10 +65,10 @@ export default function ViewLinkedDepartmentToBranchModal ({ open, handleClose, 
 
     return (
         <>
-            <Dialog open={open} fullWidth width='100%'>
+            <Dialog open={open} fullWidth width="100%">
                 <PyramidDialogTitle display={"flex"} justifyContent={"space-between"}>
                     <Grid>Link Department to {branchDetails.branchName}</Grid>
-                    <IconButton variant='secondary' onClick={handleClose}>
+                    <IconButton variant="secondary" onClick={handleClose}>
                         <Close />
                     </IconButton>
                 </PyramidDialogTitle>

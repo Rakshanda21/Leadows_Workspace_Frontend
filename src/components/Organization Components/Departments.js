@@ -128,7 +128,7 @@ export default function Departments () {
                                     <TableRow>
                                         <StyledTableCell className='tableHeaderFont'></StyledTableCell>
                                         <StyledTableCell className='tableHeaderFont'>Name</StyledTableCell>
-                                        <StyledTableCell className='tableHeaderFont'>Linked Users</StyledTableCell>
+                                        {/* <StyledTableCell className='tableHeaderFont'>Linked Users</StyledTableCell> */}
                                     </TableRow>
                                 </TableHead>
                                 {state.allDepartmentDetails && state.allDepartmentDetails.length > 0 ? (
@@ -163,7 +163,7 @@ export default function Departments () {
                                                         </MetaDataText>
                                                     </Grid>
                                                 </StyledTableCell>
-                                                <StyledTableCell className='tableContentFont'>
+                                                {/* <StyledTableCell className='tableContentFont'>
                                                     <PyramidNavButton
                                                         onClick={() => {
                                                             handleOnClickUsers(department);
@@ -171,7 +171,7 @@ export default function Departments () {
                                                     >
                                                         Users
                                                     </PyramidNavButton>
-                                                </StyledTableCell>
+                                                </StyledTableCell> */}
                                             </StyledTableRow>
                                         ))}
                                     </TableBody>

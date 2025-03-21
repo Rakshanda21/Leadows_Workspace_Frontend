@@ -1,5 +1,5 @@
-import { Add, AddCircle } from "@mui/icons-material";
-import { CircularProgress, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, useTheme } from "@mui/material";
+import { AddCircle } from "@mui/icons-material";
+import { Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,8 +15,9 @@ import {
 import { displayLocalizeText } from "../../utils/LocalizeText";
 import { logger } from "../../utils/logger";
 import { getErrorMessage } from "../Layout";
+import Loader from "../Loader";
 import NoRecords from "../static/NoRecords";
-import { CustomerIcon, RoleIcon } from "../svgComponent/IconComponent";
+import { CustomerIcon } from "../svgComponent/IconComponent";
 
 export default function Roles() {
     const state = useSelector(store => store.workspaceStore);
@@ -108,7 +109,7 @@ export default function Roles() {
                             }}
                         >
                             {loading ? (
-                                <CircularProgress />
+                                <Loader />
                             ) : (
                                 <Table className="center" aria-label="table with sticky header" stickyHeader>
                                     <TableHead className="p-3 mb-2 row">

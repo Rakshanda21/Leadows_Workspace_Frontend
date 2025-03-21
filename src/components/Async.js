@@ -1,5 +1,6 @@
-import { CircularProgress, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import * as React from "react";
+import Loader from "./Loader";
 
 const sleep = m => new Promise(r => setTimeout(r, m));
 
@@ -31,7 +32,7 @@ export default function asyncComponent(importComponent) {
             ) : (
                 <React.Fragment>
                     <Grid display={"flex"} justifyContent={"center"} alignItems={"center"} height={"100vh"} width={"100vw"}>
-                        <CircularProgress />
+                        <Loader />
                     </Grid>
                 </React.Fragment>
             );

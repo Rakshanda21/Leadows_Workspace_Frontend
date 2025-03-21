@@ -1,6 +1,7 @@
-import { Add, AddCircle } from "@mui/icons-material";
-import { CircularProgress, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { AddCircle } from "@mui/icons-material";
+import { Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
     CardHeadingBold,
     PyramidCardParent,
@@ -10,9 +11,9 @@ import {
     StyledTableRow,
 } from "../../theme/styleComponent";
 import { displayLocalizeText } from "../../utils/LocalizeText";
-import { VendorIcon } from "../svgComponent/IconComponent";
+import Loader from "../Loader";
 import NoRecords from "../static/NoRecords";
-import { useSelector } from "react-redux";
+import { VendorIcon } from "../svgComponent/IconComponent";
 
 export default function Vendor() {
     const state = useSelector(store => store.workspaceStore);
@@ -48,7 +49,7 @@ export default function Vendor() {
                             }}
                         >
                             {loading ? (
-                                <CircularProgress />
+                                <Loader />
                             ) : (
                                 <Table className="center" aria-label="table with sticky header" stickyHeader>
                                     <TableHead className="p-3 mb-2 row">

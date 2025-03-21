@@ -1,4 +1,3 @@
-import { CircularProgress } from "@mui/material";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
@@ -7,6 +6,7 @@ import { defaultRouteBasedOnUserType, isAccessible } from "../../utils/accessCon
 import axiosInstance from "../../utils/axiosInstance";
 import { logger } from "../../utils/logger";
 import { getErrorMessage } from "../Layout";
+import Loader from "../Loader";
 
 // For routes that can only be accessed by authenticated team members
 function AuthGuard ({ children }) {
@@ -60,7 +60,7 @@ function AuthGuard ({ children }) {
     if (loading) {
         return (
             <React.Fragment>
-                <CircularProgress />
+                <Loader />
             </React.Fragment>
         );
     }
