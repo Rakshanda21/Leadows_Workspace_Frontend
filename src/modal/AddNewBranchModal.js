@@ -15,6 +15,7 @@ export default function AddNewBranchModal ({ open, handleClose, createBranch }) 
         orgId: ORGID,
         branchName: "",
         location: "",
+        status:"ACTIVE",
         users: [],
     });
     const [linkUsersToBranch, setLinkUsersToBranch] = useState([]);

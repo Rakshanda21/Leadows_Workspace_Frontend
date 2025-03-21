@@ -33,6 +33,7 @@ import axiosInstance from "../utils/axiosInstance";
 import { displayLocalizeText } from "../utils/LocalizeText";
 import LinkUserToDepartmentInBranchModal from "./LinkUserToDepartmentInBranchModal";
 import { use } from "react";
+import { UserProfileColors } from "../utils/userProfileColors";
 
 export default function ViewLinkedDepartmentToBranchAndLinkUserModal({ open, handleClose, branchDetails }) {
     const state = useSelector(store => store.workspaceStore);
@@ -106,10 +107,9 @@ export default function ViewLinkedDepartmentToBranchAndLinkUserModal({ open, han
             });
     }, []);
 
-    console.log(linkUserToDepartmentInBranch, "===linkUserToDepartmentInBranch===");
     return (
         <>
-            <Dialog open={open} fullWidth PaperProps={{ style: { width: "100%", height: "70%" } }}>
+            <Dialog open={open} fullWidth PaperProps={{ style: { width: "100%", height: "80%" } }}>
                 <PyramidDialogTitle display={"flex"} justifyContent={"space-between"}>
                     <Grid>Departments</Grid>
                     <IconButton variant="secondary" onClick={handleClose}>
@@ -126,7 +126,7 @@ export default function ViewLinkedDepartmentToBranchAndLinkUserModal({ open, han
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
-                                    minHeight: "500px",
+                                    minHeight: "400px",
                                 }}
                             >
                                 <Table className="center" aria-label="table with sticky header" stickyHeader>
@@ -149,7 +149,7 @@ export default function ViewLinkedDepartmentToBranchAndLinkUserModal({ open, han
                                                                 color: theme.typography.primary.black,
                                                                 backgroundColor:
                                                                     department.status === "ACTIVE"
-                                                                        ? UserProfileColors[department?.branchName[0].toUpperCase()]
+                                                                        ? UserProfileColors[department?.departmentName[0].toUpperCase()]
                                                                         : theme.palette.primary.inActive,
 
                                                                 border: `1px solid ${theme.palette.primary.borderColor}`,

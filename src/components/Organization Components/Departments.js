@@ -141,7 +141,7 @@ export default function Departments () {
                                                             color: theme.typography.primary.black,
                                                             backgroundColor:
                                                                 department.status === "ACTIVE"
-                                                                    ? UserProfileColors[department.firstName[0].toUpperCase()]
+                                                                    ? UserProfileColors[department.departmentName[0].toUpperCase()]
                                                                     : theme.palette.primary.inActive,
 
                                                             border: `1px solid ${theme.palette.primary.borderColor}`,
