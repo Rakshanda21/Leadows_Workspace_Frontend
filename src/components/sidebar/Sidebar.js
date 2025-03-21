@@ -5,6 +5,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import { VITE_APP_ORGANIZATION_LOGO_URL } from "../../utils/axiosInstance";
 import { displayLocalizeText } from "../../utils/LocalizeText";
+import { AppHeading, CardHeadingBold } from "../../theme/styleComponent";
 
 const Drawer = styled(MuiDrawer)`
     border-right: 0;
@@ -27,7 +28,7 @@ const Sidebar = ({ items, isBotsScreen, ...rest }) => {
 
     return (
         <Drawer
-            variant='permanent'
+            variant="permanent"
             sx={{
                 width: "16vw",
                 height: "100%",
@@ -43,7 +44,7 @@ const Sidebar = ({ items, isBotsScreen, ...rest }) => {
             }}
             direction={"column"}
         >
-            <Grid className='sidebar-logo-and-heading-css' sx={{ display: "grid", placeItems: "center" }} paddingX={2} gap={2}>
+            <Grid className="sidebar-logo-and-heading-css" sx={{ display: "grid", placeItems: "center" }} paddingX={2} gap={2}>
                 <Grid sx={{ display: "grid", placeItems: "center" }}>
                     <Grid>
                         <img src={VITE_APP_ORGANIZATION_LOGO_URL} className="sidebar-logo-img" alt="" />
@@ -53,16 +54,17 @@ const Sidebar = ({ items, isBotsScreen, ...rest }) => {
                     </Grid> */}
                 </Grid>
             </Grid>
-            <Divider orientation='horizontal' variant='middle' sx={{ backgroundColor: `${theme.typography.primary.light}`, marginY: "12px" }} />
+            <Divider orientation="horizontal" variant="middle" sx={{ backgroundColor: `${theme.typography.primary.light}`, marginY: "12px" }} />
 
+            <CardHeadingBold sx={{display:'grid', placeItems:'center'}}>Features</CardHeadingBold>
             <Grid flex={1} overflow={"auto"}>
-                <List className='mt-1' sx={{ padding: "4px" }}>
+                <List className="mt-1" sx={{ padding: "4px" }}>
                     {items.map((item, index) => {
                         return (
                             <>
                                 {item.defaultRoute && (
                                     <Card
-                                        className='mb-2'
+                                        // className=''
                                         style={{
                                             boxShadow: "none",
                                             backgroundColor:
@@ -77,7 +79,7 @@ const Sidebar = ({ items, isBotsScreen, ...rest }) => {
                                         key={index}
                                     >
                                         <ListItem
-                                            className='mt-2 mb-2'
+                                            className="mt-1"
                                             // selected={item.route === currentPath}
                                             key={item.name}
                                             disablePadding
@@ -98,9 +100,9 @@ const Sidebar = ({ items, isBotsScreen, ...rest }) => {
                                                 }}
                                             >
                                                 <>
-                                                    {item.isContainPublicPath ? <img src={item.icon} height={"20px"} alt='' /> : <item.icon />}
+                                                    {item.isContainPublicPath ? <img src={item.icon} height={"20px"} alt="" /> : <item.icon />}
                                                     <ListItemText
-                                                        className='ml-2'
+                                                        className="ml-2"
                                                         primary={
                                                             <Typography
                                                                 sx={{

@@ -33,17 +33,24 @@ export const Org_Owner_NavBarOptions = [
         defaultRoute: true,
     },
     {
-        name: "Vendors",
+        name: "Permissions",
+        iconProvider: "mui",
+        icon: Groups2Icon,
+        route: "/permissions",
+        defaultRoute: true,
+    },
+    {
+        name: "Suppliers",
         iconProvider: "mui",
         icon: Hail,
         route: "/vendor",
         defaultRoute: true,
     },
     {
-        name: "Asset",
+        name: "Assets",
         iconProvider: "mui",
         icon: WebAsset,
-        route: "/asset",
+        route: "/assets",
         defaultRoute: true,
     },
     {
@@ -60,6 +67,21 @@ export const Org_Owner_NavBarOptions = [
         route: "/customers",
         defaultRoute: true,
     },
+    {
+        name: "Leaves",
+        iconProvider: "mui",
+        icon: Groups2Icon,
+        route: "/leaves",
+        defaultRoute: true,
+    },
+    {
+        name: "Salaries",
+        iconProvider: "mui",
+        icon: Groups2Icon,
+        route: "/salaries",
+        defaultRoute: true,
+    },
+  
     {
         // name: "Configuration Page",
         iconProvider: "mui",

@@ -25,12 +25,12 @@ export default function Vendor() {
                 <Grid display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Grid display={"flex"} alignItems={"center"}>
                         <VendorIcon />
-                        <CardHeadingBold>&nbsp;&nbsp;{displayLocalizeText("Vendors")}</CardHeadingBold>
+                        <CardHeadingBold>&nbsp;&nbsp;{displayLocalizeText("Suppliers")}</CardHeadingBold>
                     </Grid>
                     <Grid display={"flex"} gap={2}>
                         <Grid display={"flex"} gap={1}>
                             <PyramidCreateButton onClick={() => onClickOpenAddNewRoleModal()}>
-                                <AddCircle /> &nbsp; {displayLocalizeText("Vendors")}
+                                <AddCircle /> &nbsp; {displayLocalizeText("Supplier")}
                             </PyramidCreateButton>
                         </Grid>
                     </Grid>

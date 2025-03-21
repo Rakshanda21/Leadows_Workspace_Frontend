@@ -24,7 +24,7 @@ export default function Asset() {
                 <Grid display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Grid display={"flex"} alignItems={"center"}>
                         <AssetIcon />
-                        <CardHeadingBold>&nbsp;&nbsp;{displayLocalizeText("Asset")}</CardHeadingBold>
+                        <CardHeadingBold>&nbsp;&nbsp;{displayLocalizeText("Assets")}</CardHeadingBold>
                     </Grid>
                     <Grid display={"flex"} gap={2}>
                         <Grid display={"flex"} gap={1}>
