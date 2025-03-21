@@ -98,7 +98,7 @@ export default function Layout ({ children }) {
                                 <AppHeading sx={{ marginTop: "10px" }}>&nbsp;{displayLocalizeText(VITE_APP_ORGANIZATION_NAME)}</AppHeading> */}
                             </Grid>
 
-                            <Grid item md={2} pr={1} display={"flex"} justifyContent={"end"}>
+                            <Grid item md={2} pr={1} display={"flex"} justifyContent={"end"} alignContent={"center"}>
                                 <Grid display={"flex"} justifyContent={"space-between"}>
                                     {/* <Grid mt={2} mr={2}>
                                         <img src={VITE_APP_ORGANIZATION_LOGO_URL} height={"40px"} alt='' />
